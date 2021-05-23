@@ -108,11 +108,11 @@ Ansible was used to automate configuration of the ELK machine. No configuration 
 
 The playbook implements the following tasks:
 * Specify a different group of machines as well as a different remote user:
- `- name: Config elk VM with Docker
+ <- name: Config elk VM with Docker
       hosts: elk
       remote_user: sysadmin
       become: true
-      tasks:`
+      tasks:>
     
 * Increase System Memory : 
  `- name: Use more memory
