@@ -233,7 +233,7 @@ setup.kibana:
 - Press CTRL + W (to search > enter remote_user then change `remote_user = azureuser`
 ```
 
-`Where : `azureadmin` is the remote user that has control over ansible.`
+`Where : `azureuser` is the remote user that has control over ansible.`
 
 ### How to Edit the Ansible Hosts file in this directory /etc/ansible/hosts
 
@@ -257,21 +257,21 @@ setup.kibana:
 
 See the final solution of the [Ansible ELK Installation.](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/ELK-Stack/install-elk.yml)
 
-    * Specify a different group of machines as well as a different remote user
+   * Specify a different group of machines as well as a different remote user
 
       ```- name: Config elk VM with Docker
         hosts: elk
         remote_user: sysadmin
         become: true
         tasks:
-```
+``
 
-`Where: [elk] is the Virtual Machine hosts or the group of machine targetted for this installation and can only be done by a `sysadmin` remote_user`
+ `Where: [elk] is the Virtual Machine hosts or the group of machine targetted for this installation and can only be done by a azureuser remote_user`
 
 ### How to Copy the raw Filebeat Module Configuration file from web to the /etc/ansible/files directory:
 
     ```curl -L -O https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > /etc/ansible/files/filebeat-config.yml
-```
+``
         * Note : The filebeat-config.yml as our filebeat configuration file.
 
 See the final solution of the [Filebeat Config file](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/filebeat-config.yml)
@@ -288,9 +288,9 @@ setup.kibana:
 
 ### How to Copy the raw Metricbeat Module Configuration from web to the /etc/ansible/files/ directory:
 
-     ```curl -L -O https://gist.githubusercontent.com/slape/58541585cc1886d2e26cd8be557ce04c/raw/0ce2c7e744c54513616966affb5e9d96f5e12f73/metricbeat > /etc/ansible/files/metricbeat-config.yml
-```
-        * Note : the metricbeat-config.yml as our metricbeat configuration file.
+     ```curl -L -O https://gist.githubusercontent.com/slape/58541585cc1886d2e26cd8be557ce04c/raw/0ce2c7e744c54513616966affb5e9d96f5e12f73/metricbeat > /etc/ansible/files/metricbeat-config.yml```
+     
+   * Note : the metricbeat-config.yml as our metricbeat configuration file.
 
 See the final solution of the [Metricbeat Config file.](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/metricbeat-config.yml)
 
@@ -303,7 +303,7 @@ setup.kibana:
 ```
 `Where: hosts: ["10.1.0.4:9200"] is the ELK VM that can install Metricbeat`
 
-    * Which URL do you navigate to in order to check that the ELK server is running?
+   * Which URL do you navigate to in order to check that the ELK server is running?
         * Test Kibana on web : http://[ELK-VM.External.IP]:5601/app/kibana
         * Test Kibana on localhost: azureuser@10.1.0.4: curl localhost:5601/app/kibana
 
