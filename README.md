@@ -101,15 +101,38 @@ A summary of the access policies in place can be found in the table below.
 | ELK Server    | No                  | Workstation public IP on TCP 5601 |
 | Load Balancer | No                  | Workstation public IP on HTTP 80  |
 
+
 ### Elk Configuration
 
-Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
-- _TODO: What is the main advantage of automating configuration with Ansible?_
+Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because _Ansible allows you to quickly and easily deploy multitier applications. Their is no need to write code to automate systems, simply list the tasks required to be done by configuring the ansible playbook and the application will figure out how to get your systems to the state desired._
 
 The playbook implements the following tasks:
-- _TODO: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
-- ...
-- ...
+* Specify a different group of machines as well as a different remote user:
+   '- name: Config elk VM with Docker
+      hosts: elk
+      remote_user: sysadmin
+      become: true
+      tasks:'
+    
+* Increase System Memory : 
+   '- name: Use more memory
+     sysctl:
+      name: vm.max_map_count
+      value: '262144'
+      state: present
+      reload: yes'
+
+* Install the following services:
+   `docker.io`
+   `python3-pip`
+   `docker`, which is the Docker Python pip module.
+
+* Launching and Exposing the container with these published ports:
+    `5601:5601` 
+    `9200:9200`
+    `5044:5044`
+
+
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
