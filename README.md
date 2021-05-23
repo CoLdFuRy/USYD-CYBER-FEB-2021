@@ -109,7 +109,7 @@ Ansible was used to automate configuration of the ELK machine. No configuration 
 The playbook implements the following tasks:
 * Specify a different group of machines as well as a different remote user:
 
-```  - name: Config elk VM with Docker
+```- name: Config elk VM with Docker
       hosts: elk
       remote_user: sysadmin
       become: true
@@ -117,7 +117,7 @@ The playbook implements the following tasks:
 ```
  
 * Increase System Memory : 
-```  - name: Use more memory
+``` - name: Use more memory
      sysctl:
       name: vm.max_map_count
       value: '262144'
@@ -140,7 +140,7 @@ The playbook implements the following tasks:
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
-![TODO: Update the path with the name of your screenshot of docker ps output](Images/docker_ps_output.png)
+![alt text](https://raw.githubusercontent.com/CoLdFuRy/USYD-CYBER-FEB-2021/main/Diagrams/ELK.JPG?token=AS3LVQRPDHK4HS7DV6BFNWTAVJECW "ELK instance")
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
