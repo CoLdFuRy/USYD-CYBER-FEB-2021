@@ -206,24 +206,24 @@ setup.kibana:
 
 ### How to get the Metricbeat installer:
 
-    Login to Kibana > Add Metric Data > Docker Metrics > DEB > Getting Started
-    Copy: curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.6.1-amd64.deb
+   Login to Kibana > Add Metric Data > Docker Metrics > DEB > Getting Started
+   Copy: curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.6.1-amd64.deb
 
-    * Which file is the playbook? Where do you copy it?
+   * Which file is the playbook? Where do you copy it?
 
-        Answer : For the ANSIBLE : We will create the pentest.yml as our playbook.
+       * Answer : For the ANSIBLE : We will create the pentest.yml as our playbook.
 
         See [Ansible Playbook](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/pentest.yml)
 
-        Answer : For FILEBEAT: We will create filbeat-playbook.yml as our playbook.
+       * Answer : For FILEBEAT: We will create filbeat-playbook.yml as our playbook.
 
         See [Filebeat Playbook](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/ELK-Stack/metricbeat-playbook.yml)
 
-        Answer: For METRICBEAT: We will create metricbeat-playbook.yml as our playbook.
+       * Answer: For METRICBEAT: We will create metricbeat-playbook.yml as our playbook.
 
         See [Metricbeat Playbook](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/ELK-Stack/filebeat-playbook.yml)
 
-    Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?
+   * Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?
 
 ### How to Download and Edit the Ansible Configuration file
 
