@@ -66,30 +66,40 @@ Integrating an ELK server allows users to easily monitor the vulnerable VMs for 
 The configuration details of each machine may be found below.
 _Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdown_tables) to add/remove values from the table_.
 
-| Name     | Function | IP Address | Operating System |
-|----------|----------|------------|------------------|
-| Jump Box | Gateway  | 10.0.0.1   | Linux            |
-| TODO     |          |            |                  |
-| TODO     |          |            |                  |
-| TODO     |          |            |                  |
+| Name          | Function       | IP Address                 | Operating System |
+|---------------|----------------|----------------------------|------------------|
+| Jump-Box-Prov | Gateway        | 10.0.0.4 / 191.239.176.100 | Linux            |
+| Web-1         | Web Server     | 10.0.0.5                   | Linux            |
+| Web-2         | Web Server     | 10.0.0.6                   | Linux            |
+| ELK           | ELK Server     | 10.1.0.4 / 20.37.244.118   | Linux            |
+| Red-Team-LB   | Load Balancer  | 23.101.233.237             | Linux            |
+| Workstation   | Access Control | External IP of Public IP   | Linux            |
+
+Server redundency has been set-up for Web-1 and Web-2 Virtual Machines.
+This can be confirmed by visiting the DVWA site via <http://{LB-IPAddress/setup.php> and disabling either or both Web servers.
+
 
 ### Access Policies
 
 The machines on the internal network are not exposed to the public Internet. 
 
-Only the _____ machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
-- _TODO: Add whitelisted IP addresses_
+Only the _Elk Server_ machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
+    * Workstation public IP through TCP 5601
 
-Machines within the network can only be accessed by _____.
-- _TODO: Which machine did you allow to access your ELK VM? What was its IP address?_
+Machines within the network can only be accessed by _Web-3 and Jump-Box-Provisioner_.
+    Which machine did you allow to access your ELK VM? What was its IP address?
+    * Jump-Box-Provisioner: 10.0.0.4 via SSH port 20
+    * Workstation public IP via TCP port 5601
 
 A summary of the access policies in place can be found in the table below.
 
-| Name     | Publicly Accessible | Allowed IP Addresses |
-|----------|---------------------|----------------------|
-| Jump Box | Yes/No              | 10.0.0.1 10.0.0.2    |
-|          |                     |                      |
-|          |                     |                      |
+| Name          | Publicly Accessible | Allowed IP Addresses              |
+|---------------|---------------------|-----------------------------------|
+| Jump Box      | No                  | Workstation public IP on SSH 22   |
+| Web-1         | No                  | 10.0.0.4 on SSH 22                |
+| Web-2         | No                  | 10.0.0.4 on SSH 22                |
+| ELK Server    | No                  | Workstation public IP on TCP 5601 |
+| Load Balancer | No                  | Workstation public IP on HTTP 80  |
 
 ### Elk Configuration
 
