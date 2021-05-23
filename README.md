@@ -211,15 +211,15 @@ setup.kibana:
 
    * Which file is the playbook? Where do you copy it?
 
-       * Answer : For the ANSIBLE : We will create the pentest.yml as our playbook.
+       * Answer : For Ansible create the pentest.yml as our playbook.
 
         See [Ansible Playbook](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/pentest.yml)
 
-       * Answer : For FILEBEAT: We will create filbeat-playbook.yml as our playbook.
+       * Answer : For Filebeat create filbeat-playbook.yml as our playbook.
 
         See [Filebeat Playbook](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/ELK-Stack/metricbeat-playbook.yml)
 
-       * Answer: For METRICBEAT: We will create metricbeat-playbook.yml as our playbook.
+       * Answer: For Metricbeat create metricbeat-playbook.yml as our playbook.
 
         See [Metricbeat Playbook](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/ELK-Stack/filebeat-playbook.yml)
 
