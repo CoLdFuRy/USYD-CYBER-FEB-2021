@@ -17,14 +17,14 @@ These files have been tested and used to generate a live ELK deployment on Azure
 * [Ansible Metricbeat Playbook](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/ELK-Stack/filebeat-playbook.yml)
 * [Ansible Metricbeat Config file](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/metricbeat-config.yml)
 
-* Download the ansible.cfg configuration file from <https://ansible.com/> and edit or copy Ansible Configuration to your '/etc/ansible' directory
+Download the ansible.cfg configuration file from <https://ansible.com/> and edit or copy Ansible Configuration to your '/etc/ansible' directory
 
   * For ansible.cfg edit:
 
-    cd /etc/ansible/	
+    'cd /etc/ansible/	
     nano ansible.cfg
     CTRL + W > enter remote_user
-    change `remote_user = sysadmin`
+    change `remote_user = sysadmin`'
 
 Assign username and SSH Public Key for Web1, Web2, ELK Virtual Machine in Azure GUI
 
