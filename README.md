@@ -113,7 +113,7 @@ The playbook implements the following tasks:
       hosts: elk
       remote_user: sysadmin
       become: true
-      tasks:>
+      tasks:
 </dl>
  
 * Increase System Memory : 
