@@ -21,10 +21,10 @@ Download the ansible.cfg configuration file from <https://ansible.com/> and edit
 
   * For ansible.cfg edit:
 
-  ``cd /etc/ansible/	
+   `cd /etc/ansible/	
     nano ansible.cfg
     CTRL + W > enter remote_user
-    change `remote_user = sysadmin``
+    change _remote_user = sysadmi_n`
 
 Assign username and SSH Public Key for Web1, Web2, ELK Virtual Machine in Azure GUI
 
@@ -34,8 +34,9 @@ Assign username and SSH Public Key for Web1, Web2, ELK Virtual Machine in Azure 
       SSH Key : copy id_rsa.pub from the ansible control node in .ssh/ directory.`
 
   * To get the SSH Key run this command:
-       `~/.ssh# ssh-keygen
-        ~/.ssh# cat id_rsa.pub`
+       `~/.ssh# ssh-keygen`
+       `~/.ssh# cat id_rsa.pub`
+
 
 This document contains the following details:
 - Description of the Topologu
