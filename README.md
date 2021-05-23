@@ -11,7 +11,7 @@ These files have been tested and used to generate a live ELK deployment on Azure
 * [Ansible Playbook - pentest](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/pentest.yml)
 * [Ansible Hosts](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/hosts)
 * [Ansible Configuration](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/ansible.cfg)
-* [Ansible ELK Installation and VM Configuration]()
+* [Ansible ELK Installation and VM Configuration](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/ELK-Stack/install-elk.yml)
 * [Ansible Filebeat Playbook](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/ELK-Stack/metricbeat-playbook.yml)
 * [Ansible Filebeat Config file](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/filebeat-config.yml)
 * [Ansible Metricbeat Playbook](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/ELK-Stack/filebeat-playbook.yml)
@@ -96,8 +96,8 @@ A summary of the access policies in place can be found in the table below.
 | Name          | Publicly Accessible | Allowed IP Addresses              |
 |---------------|---------------------|-----------------------------------|
 | Jump Box      | No                  | Workstation public IP on SSH 22   |
-| Web-1         | No                  | 10.0.0.4 on SSH 22                |
-| Web-2         | No                  | 10.0.0.4 on SSH 22                |
+| Web-1         | No                  | 10.0.0.5 on SSH 22                |
+| Web-2         | No                  | 10.0.0.6 on SSH 22                |
 | ELK Server    | No                  | Workstation public IP on TCP 5601 |
 | Load Balancer | No                  | Workstation public IP on HTTP 80  |
 
@@ -144,25 +144,180 @@ The following screenshot displays the result of running `docker ps` after succes
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
-- _TODO: List the IP addresses of the machines you are monitoring_
+
+  * Web1 : 10.0.0.5
+  * Web2 : 10.0.0.6
 
 We have installed the following Beats on these machines:
-- _TODO: Specify which Beats you successfully installed_
+  * ELK Server, Web-1 and Web-2
+  * The ELK Stack Installed are: _FileBeat and MetricBeat_
 
 These Beats allow us to collect the following information from each machine:
-- _TODO: In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
+  * Filebeat: _log events_
+  * Metricbeat: _metrics and system statistics_
 
 ### Using the Playbook
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
-- Copy the _____ file to _____.
-- Update the _____ file to include...
-- Run the playbook, and navigate to ____ to check that the installation worked as expected.
+For ELK VM Configuration:
+    * Copy the [Ansible ELK Installation](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/ELK-Stack/metricbeat-playbook.yml) file to ~/etc/ansible folder within the Ansible docker.
+    * Run the playbook using this command: `ansible-playbook install-elk.yml`
 
-_TODO: Answer the following questions to fill in the blanks:_
-- _Which file is the playbook? Where do you copy it?_
-- _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
-- _Which URL do you navigate to in order to check that the ELK server is running?
+For Filebeat:
+    * Download Filebeat playboook using the command:
+    `curl -L -O https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > /etc/ansible/files/filebeat-config.yml`
+    * Copy the '/etc/ansible/roles/filebeat-config.yml' file to '/etc/filebeat/filebeat-playbook.yml'
+    * Update the filebeat-playbook.yml file to include installer
+    `curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.6.1-amd64.deb`
+    * Update the filebeat-config.yml file root@c1e0a059c0b0:/etc/ansible/files# `nano filebeat-config.yml`
+   ```output.elasticsearch:
+  #Array of hosts to connect to.
+ hosts: ["10.1.0.4:9200"]
+  username: "elastic"
+  password: "changeme” 
+```
+   * Run the playbook using this command `ansible-playbook filebeat-playbook.yml` and navigate to Kibana > Logs : Add log data > System logs > 5:Module Status > Check data to check that the installation worked as expected.
 
-_As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
+For METRICBEAT:
+    * Download Metricbeat playbook using this command:
+        `curl -L -O https://gist.githubusercontent.com/slape/58541585cc1886d2e26cd8be557ce04c/raw/0ce2c7e744c54513616966affb5e9d96f5e12f73/metricbeat > /etc/ansible/files/metricbeat-config.yml`
+    * Copy the /etc/ansible/files/metricbeat file to /etc/metricbeat/metricbeat-playbook.yml
+    * Update the filebeat-playbook.yml file to include installer
+        `curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.6.1-amd64.deb`
+    * Update the metricbeat file rename to metricbeat-config.yml
+root@c1e0a059c0b0:/etc/ansible/files# `nano metricbeat-config.yml`
+```output.elasticsearch:
+#Array of hosts to connect to.
+hosts: ["10.1.0.4:9200"]
+  username: "elastic"
+  password: "changeme"
+
+setup.kibana:
+  host: "10.1.0.4:5601"
+```
+   * Run the playbook, (ansible-playbook metricbeat-playbook.yml) and navigate to Kibana > Add Metric Data > Docker Metrics > Module Status to check that the installation worked as expected.
+
+## ADDITONAL NOTES:
+### How to get Filebeat installer :
+
+    Login to Kibana > Logs : Add log data > System logs > DEB > Getting started
+    Copy: curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.6.1-amd64.deb
+
+### How to get the Metricbeat installer:
+
+    Login to Kibana > Add Metric Data > Docker Metrics > DEB > Getting Started
+    Copy: curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.6.1-amd64.deb
+
+    * Which file is the playbook? Where do you copy it?
+
+        Answer : For the ANSIBLE : We will create the pentest.yml as our playbook.
+
+        See [Ansible Playbook](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/pentest.yml)
+
+        Answer : For FILEBEAT: We will create filbeat-playbook.yml as our playbook.
+
+        See [Filebeat Playbook](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/ELK-Stack/metricbeat-playbook.yml)
+
+        Answer: For METRICBEAT: We will create metricbeat-playbook.yml as our playbook.
+
+        See [Metricbeat Playbook](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/ELK-Stack/filebeat-playbook.yml)
+
+    Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?
+
+### How to Download and Edit the Ansible Configuration file
+
+```- root@4c4f5f3c2523:/etc/ansible# curl -L -O https://ansible.com/  > ansible.cfg
+- root@4c4f5f3c2523:/etc/ansible# nano ansible.cfg
+
+- Press CTRL + W (to search > enter remote_user then change `remote_user = azureuser`
+```
+
+`Where : `azureadmin` is the remote user that has control over ansible.`
+
+### How to Edit the Ansible Hosts file in this directory /etc/ansible/hosts
+
+```#List the IP Addresses of your webservers
+#You should have at least 2 IP addresses
+
+[webservers]
+10.0.0.4 ansible_python_interpreter=/usr/bin/python3
+10.0.0.5 ansible_python_interpreter=/usr/bin/python3
+10.0.0.6 ansible_python_interpreter=/usr/bin/python3
+
+#List the IP address of your ELK server
+#There should only be one IP address
+[elk]
+10.1.0.4 ansible_python_interpreter=/usr/bin/python3
+```
+
+`Where: [webservers] and [elk] are the group of machines and each group has 1 or more members.`
+
+### How to Create the ELK Installation and VM Configuration in the /etc/ansible/ directory:
+
+See the final solution of the [Ansible ELK Installation.](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/ELK-Stack/install-elk.yml)
+
+    * Specify a different group of machines as well as a different remote user
+
+      ```- name: Config elk VM with Docker
+        hosts: elk
+        remote_user: sysadmin
+        become: true
+        tasks:
+```
+
+`Where: [elk] is the Virtual Machine hosts or the group of machine targetted for this installation and can only be done by a `sysadmin` remote_user`
+
+### How to Copy the raw Filebeat Module Configuration file from web to the /etc/ansible/files directory:
+
+    ```curl -L -O https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > /etc/ansible/files/filebeat-config.yml
+```
+        * Note : The filebeat-config.yml as our filebeat configuration file.
+
+See the final solution of the [Filebeat Config file](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/filebeat-config.yml)
+
+```hosts: ["10.1.0.4:9200"]
+  username: "elastic"
+  password: "changeme" 
+
+setup.kibana:
+  host: "10.1.0.4:5601"
+```
+
+`Where: hosts: ["10.1.0.4:9200"] is the ELK VM that can install Filebeat`
+
+### How to Copy the raw Metricbeat Module Configuration from web to the /etc/ansible/files/ directory:
+
+     ```curl -L -O https://gist.githubusercontent.com/slape/58541585cc1886d2e26cd8be557ce04c/raw/0ce2c7e744c54513616966affb5e9d96f5e12f73/metricbeat > /etc/ansible/files/metricbeat-config.yml
+```
+        * Note : the metricbeat-config.yml as our metricbeat configuration file.
+
+See the final solution of the [Metricbeat Config file.](https://github.com/CoLdFuRy/USYD-CYBER-FEB-2021/blob/main/Ansible/metricbeat-config.yml)
+
+```hosts: ["10.1.0.4:9200"]
+  username: "elastic"
+  password: "changeme" 
+
+setup.kibana:
+  host: "10.1.0.4:5601"
+```
+`Where: hosts: ["10.1.0.4:9200"] is the ELK VM that can install Metricbeat`
+
+    * Which URL do you navigate to in order to check that the ELK server is running?
+        * Test Kibana on web : http://[ELK-VM.External.IP]:5601/app/kibana
+        * Test Kibana on localhost: azureuser@10.1.0.4: curl localhost:5601/app/kibana
+
+## Activity Commands in Linux:
+| ### COMMAND 					                                 | ### EXPLANATION              		             |
+|---------------------------------------------------|---------------------------------------------|
+| `sudo apt-get update` 		    	                     | this will update all packages		             |
+| `sudo apt install docker.io` 		    	              | install docker application		                |
+| `sudo service docker start` 		   	                | start the docker application		              |
+| `systemctl status docker` 		    	                 | status of the docker application		          |
+| `sudo docker pull cyberxsecurity/ansible` 	       | download the docker file			                 |
+| `sudo docker run -ti cyberxsecurity/ansible bash` | run and create a docker image	           	  |
+| `sudo docker start <docker-name>` 		              | starts the image specified	              	  |
+| `sudo docker ps -a`			         	                  | list all active/inactive containers	        |
+| `sudo docker attach <docker-name>` 		             | effectively sshing into the ansible	        |
+| `ssh-keygen` 					                                | create a ssh key				                        |
+| `ansible -m ping all` 			                         | check the connection of ansible containers  |
